@@ -18,6 +18,12 @@ namespace ConveyorMyWay
             conveyors = new List<Conveyor>();
             dropOffs = new List<DropOff>();
         }
+        public void Move()
+        {
+            LoadCheckIns();
+            MoveNodes(conveyors);
+            MoveNodes(checkIns);
+        }
 
         private void LoadCheckIns()
         {
@@ -27,9 +33,9 @@ namespace ConveyorMyWay
             }
         }
 
-        public void MoveNodes()
+        public void MoveNodes<T>(List<T> moveList) where T : Node
         {
-            foreach(Node c in conveyors)
+            foreach(Node c in moveList)
             {
                 if(c.nextNode != null && c.justReceived == false)
                 {
@@ -76,6 +82,7 @@ namespace ConveyorMyWay
                 case "CheckIn":
                     CheckIn ch = new CheckIn();
                     checkIns.Add(ch);
+                    ch.AddBaggage(new Baggage());
                     return ch;
                 case "DropOff":
                     DropOff dr = new DropOff();

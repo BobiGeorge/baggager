@@ -18,8 +18,16 @@ namespace ConveyorMyWay
         public void SendFirstBaggage()
         {
             if (baggages.Any() && baggageHeld == null)
+            {
                 baggageHeld = baggages.First();
                 baggages.RemoveAt(0);
+                justReceived = false;
+            }
+        }
+
+        public void AddBaggage(Baggage b)
+        {
+            baggages.Add(b);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace ConveyorMyWay
 
         private void TimerSequence(object source, ElapsedEventArgs e)
         {
-            thisEngine.MoveNodes();
+            thisEngine.Move();
 
             animationBox.Invalidate(); 
         }

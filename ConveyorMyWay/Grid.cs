@@ -109,35 +109,48 @@ namespace ConveyorMyWay
             return t;
         }
 
-        public void AutoConnect(GridTile selected)
+        public List<GridTile> AutoConnect(GridTile selected)
         {
+            List<GridTile> connectees = new List<GridTile>();
             if(selected is CheckInTile)
             {
                 GridTile target = FindTileInRowColumnCoordinates(selected.Column, selected.Row + 1);
-                if(!(target is EmptyTile))
+                if (!(target is EmptyTile))
+                {
                     ConnectTiles(selected, target);
+                    connectees.Add(target);
+                }
             }
             else if(selected is DropOffTile)
             {
                 GridTile target = FindTileInRowColumnCoordinates(selected.Column, selected.Row - 1);
                 if (!(target is EmptyTile))
+                {
                     ConnectTiles(target, selected);
+                    connectees.Add(target);
+                }
             }
             else if(selected != null)
             {
                 List<GridTile> targets = GetNeighboursIn4Directions(selected); 
-                foreach(GridTile c in targets)
+                foreach(GridTile target in targets)
                 {
-                    if (c.nextTile == null && !(c is EmptyTile) && !(c is DropOffTile))
-                        ConnectTiles(c, selected);
-                    else if(c is DropOffTile)
+                    if (target.nextTile == null && !(target is EmptyTile) && !(target is DropOffTile))
                     {
-                        ConnectTiles(selected, c);
+                        ConnectTiles(target, selected);
+                        connectees.Add(target);
                     }
-                    else if(c.nextTile != null && !(c is EmptyTile) && c.nextTile != selected)
-                        ConnectTiles(selected, c);
+                    else if (target is DropOffTile)
+                    {
+                        ConnectTiles(selected, target);
+                    }
+                    else if (target.nextTile != null && !(target is EmptyTile) && target.nextTile != selected)
+                    {
+                        ConnectTiles(selected, target);
+                    }
                 }
             }
+            return false;
         }
         public List<GridTile> GetNeighboursIn4Directions(GridTile c)
         {
