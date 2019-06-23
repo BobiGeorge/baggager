@@ -8,5 +8,20 @@ namespace ConveyorMyWay
 {
     class DropOff : Node
     {
+        List<Baggage> baggages;
+
+        public DropOff()
+        {
+            baggages = new List<Baggage>();
+        }
+
+        public void ReceiveBaggage()
+        {
+            if (baggageHeld != null)
+            {
+                baggages.Add(baggageHeld);
+                baggageHeld = null;
+            }
+        }
     }
 }

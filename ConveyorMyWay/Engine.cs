@@ -20,16 +20,25 @@ namespace ConveyorMyWay
         }
         public void Move()
         {
-            LoadCheckIns();
+            ReceiveFromDropOff();
+            SendToCheckIns();
             MoveNodes(conveyors);
             MoveNodes(checkIns);
         }
 
-        private void LoadCheckIns()
+        private void SendToCheckIns()
         {
             foreach(CheckIn c in checkIns)
             {
                 c.SendFirstBaggage();
+            }
+        }
+
+        private void ReceiveFromDropOff()
+        {
+            foreach(DropOff d in dropOffs)
+            {
+                d.ReceiveBaggage();
             }
         }
 

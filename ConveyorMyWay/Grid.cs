@@ -150,7 +150,7 @@ namespace ConveyorMyWay
                     }
                 }
             }
-            return false;
+            return null;
         }
         public List<GridTile> GetNeighboursIn4Directions(GridTile c)
         {
