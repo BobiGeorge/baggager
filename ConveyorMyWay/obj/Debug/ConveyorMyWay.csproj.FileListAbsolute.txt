@@ -1,0 +1,10 @@
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\bin\Debug\ConveyorMyWay.exe.config
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\bin\Debug\ConveyorMyWay.exe
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\bin\Debug\ConveyorMyWay.pdb
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\obj\Debug\ConveyorMyWay.csprojAssemblyReference.cache
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\obj\Debug\ConveyorMyWay.Form1.resources
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\obj\Debug\ConveyorMyWay.Properties.Resources.resources
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\obj\Debug\ConveyorMyWay.csproj.GenerateResource.cache
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\obj\Debug\ConveyorMyWay.csproj.CoreCompileInputs.cache
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\obj\Debug\ConveyorMyWay.exe
+C:\Users\Borko-chan\source\repos\ConveyorMyWay\ConveyorMyWay\obj\Debug\ConveyorMyWay.pdb
