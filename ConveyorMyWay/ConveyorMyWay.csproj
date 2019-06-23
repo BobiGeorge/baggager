@@ -80,6 +80,7 @@
     <Compile Include="Grid.cs" />
     <Compile Include="GridTile.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="PathFinder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

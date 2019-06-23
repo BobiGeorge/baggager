@@ -15,6 +15,7 @@ namespace ConveyorMyWay
     {
         Grid thisGrid;
         Engine thisEngine;
+        PathFinder pathFinder;
 
         string buildType;
         bool inBuildMode;
@@ -29,6 +30,7 @@ namespace ConveyorMyWay
 
             thisGrid = new Grid(animationBox.Width, animationBox.Height);
             thisEngine = new Engine();
+            pathFinder = new PathFinder();
 
             buildType = "Conveyor";
             isBuildingConveyor = false;
@@ -51,6 +53,11 @@ namespace ConveyorMyWay
             t = thisGrid.AddTileAtCoordinates(t, thisEngine.AddNode(buildType), buildType);
             t = thisGrid.FindTileInRowColumnCoordinates(2, 3);
             t = thisGrid.AddTileAtCoordinates(t, thisEngine.AddNode(buildType), buildType);
+            t = thisGrid.FindTileInRowColumnCoordinates(8, 8);
+            t = thisGrid.AddTileAtCoordinates(t, thisEngine.AddNode("DropOff"), "DropOff");
+            DropOffTile d = t as DropOffTile;
+            DropOff dd = d.nodeInGrid as DropOff;
+            dd.FlightID = 111;
             Conveyor c = thisEngine.firstConveyor();
             c.baggageHeld = new Baggage();
             List<Conveyor> conveyors = thisEngine.GetConveyors();
@@ -82,7 +89,18 @@ namespace ConveyorMyWay
                 selectedTile = thisGrid.AddTileAtCoordinates(t, thisEngine.AddNode(buildType), buildType);
                 if(selectedTile is ConveyorTile)
                     isBuildingConveyor = true;
-                thisGrid.AutoConnect(selectedTile);
+
+                List<GridTile> l1 = new List<GridTile>();
+                List<GridTile> l2 = new List<GridTile>();
+                (l1, l2) = thisGrid.AutoConnect(selectedTile);
+                foreach(GridTile d in l1)
+                {
+                    thisEngine.ConnectNodes(d.nodeInGrid, selectedTile.nodeInGrid);
+                }
+                foreach(GridTile d in l2)
+                {
+                    thisEngine.ConnectNodes(selectedTile.nodeInGrid, d.nodeInGrid);
+                }
             }
             if(inBuildMode && !(t is EmptyTile))
             {
@@ -100,6 +118,8 @@ namespace ConveyorMyWay
                     lblNextTile.Text = t.nextTile.Column + " " + t.nextTile.Row;
                 else
                     lblNextTile.Text = "";
+
+                Console.WriteLine("nani " + pathFinder.FindFinalDropOff(t.nodeInGrid,0));
             }
 
             animationBox.Invalidate();
@@ -116,7 +136,7 @@ namespace ConveyorMyWay
                 thisGrid.ConnectTiles(selectedTile, t);
                 thisEngine.ConnectNodes(selectedTile.nodeInGrid, t.nodeInGrid);
                 selectedTile = t;
-            }
+            }  
             if (isConnecting && thisGrid.CheckIfNeighbours(selectedTile, t) && !(t is EmptyTile))
             {
                 thisGrid.ConnectTiles(selectedTile, t);
@@ -130,7 +150,20 @@ namespace ConveyorMyWay
         private void AnimationBox_MouseUp(object sender, MouseEventArgs e)
         {
             if (isBuildingConveyor)
+            {
                 thisGrid.AutoConnect(selectedTile);
+                List<GridTile> l1 = new List<GridTile>();
+                List<GridTile> l2 = new List<GridTile>();
+                (l1, l2) = thisGrid.AutoConnect(selectedTile);
+                foreach (GridTile d in l1)
+                {
+                    thisEngine.ConnectNodes(d.nodeInGrid, selectedTile.nodeInGrid);
+                }
+                foreach (GridTile d in l2)
+                {
+                    thisEngine.ConnectNodes(selectedTile.nodeInGrid, d.nodeInGrid);
+                }
+            }
 
             isBuildingConveyor = false;
             isConnecting = false;

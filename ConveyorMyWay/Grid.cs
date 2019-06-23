@@ -109,10 +109,13 @@ namespace ConveyorMyWay
             return t;
         }
 
-        public List<GridTile> AutoConnect(GridTile selected)
+        //holy cow I just learned about tuples this is awesome!
+        public (List<GridTile>, List<GridTile>) AutoConnect(GridTile selected)
         {
+            List<GridTile> connectors = new List<GridTile>();
             List<GridTile> connectees = new List<GridTile>();
-            if(selected is CheckInTile)
+
+            if (selected is CheckInTile)
             {
                 GridTile target = FindTileInRowColumnCoordinates(selected.Column, selected.Row + 1);
                 if (!(target is EmptyTile))
@@ -127,7 +130,7 @@ namespace ConveyorMyWay
                 if (!(target is EmptyTile))
                 {
                     ConnectTiles(target, selected);
-                    connectees.Add(target);
+                    connectors.Add(target);
                 }
             }
             else if(selected != null)
@@ -138,19 +141,21 @@ namespace ConveyorMyWay
                     if (target.nextTile == null && !(target is EmptyTile) && !(target is DropOffTile))
                     {
                         ConnectTiles(target, selected);
-                        connectees.Add(target);
+                        connectors.Add(target);
                     }
                     else if (target is DropOffTile)
                     {
                         ConnectTiles(selected, target);
+                        connectees.Add(target);
                     }
                     else if (target.nextTile != null && !(target is EmptyTile) && target.nextTile != selected)
                     {
                         ConnectTiles(selected, target);
+                        connectees.Add(target);
                     }
                 }
             }
-            return null;
+            return (connectors, connectees);
         }
         public List<GridTile> GetNeighboursIn4Directions(GridTile c)
         {

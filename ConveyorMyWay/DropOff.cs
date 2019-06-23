@@ -8,6 +8,8 @@ namespace ConveyorMyWay
 {
     class DropOff : Node
     {
+        public int FlightID;
+
         List<Baggage> baggages;
 
         public DropOff()

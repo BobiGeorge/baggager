@@ -11,19 +11,21 @@ namespace ConveyorMyWay
         List<CheckIn> checkIns;
         List<Conveyor> conveyors;
         List<DropOff> dropOffs;
+        List<BranchingConveyor> branchingConveyors;
 
         public Engine()
         {
             checkIns = new List<CheckIn>();
             conveyors = new List<Conveyor>();
             dropOffs = new List<DropOff>();
+            branchingConveyors = new List<BranchingConveyor>();
         }
         public void Move()
         {
             ReceiveFromDropOff();
             SendToCheckIns();
             MoveNodes(conveyors);
-            MoveNodes(checkIns);
+            MoveNodes(checkIns);    
         }
 
         private void SendToCheckIns()
@@ -57,6 +59,10 @@ namespace ConveyorMyWay
                 }
                 c.justReceived = false;
             }
+        }
+        public void MoveBranchingConveyor()
+        {
+
         }
 
         public Conveyor firstConveyor()
@@ -97,6 +103,10 @@ namespace ConveyorMyWay
                     DropOff dr = new DropOff();
                     dropOffs.Add(dr);
                     return dr;
+                case "Branch":
+                    BranchingConveyor br = new BranchingConveyor();
+                    branchingConveyors.Add(br);
+                    return br;
             }
             return null;
         }

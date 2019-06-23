@@ -9,5 +9,6 @@ namespace ConveyorMyWay
     class Baggage
     {
         public bool justTransfered;
+        public int flightID;
     }
 }
