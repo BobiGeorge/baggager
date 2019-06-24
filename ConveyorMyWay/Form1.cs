@@ -16,6 +16,7 @@ namespace ConveyorMyWay
         Grid thisGrid;
         Engine thisEngine;
         PathFinder pathFinder;
+        FlightManager flightManager;
 
         string buildType;
         bool inBuildMode;
@@ -31,6 +32,7 @@ namespace ConveyorMyWay
             thisGrid = new Grid(animationBox.Width, animationBox.Height);
             thisEngine = new Engine();
             pathFinder = new PathFinder();
+            flightManager = new FlightManager();
 
             buildType = "Conveyor";
             isBuildingConveyor = false;
@@ -113,13 +115,7 @@ namespace ConveyorMyWay
 
             if(inBuildMode == false)
             {
-                lblTileCoordinates.Text = t.Column + " " + t.Row;
-                if (t.nextTile != null)
-                    lblNextTile.Text = t.nextTile.Column + " " + t.nextTile.Row;
-                else
-                    lblNextTile.Text = "";
-
-                Console.WriteLine("nani " + pathFinder.FindFinalDropOff(t.nodeInGrid,0));
+                InfoDisplayer(t);
             }
 
             animationBox.Invalidate();
@@ -198,6 +194,75 @@ namespace ConveyorMyWay
             else if (rbDropOff.Checked)
             {
                 buildType = "DropOff";
+            }
+            else if (rbBranch.Checked)
+            {
+                buildType = "Branch";
+            }
+        }
+
+        private void BtnAddFlight_Click(object sender, EventArgs e){
+
+            Random rnd = new Random();
+            int id = rnd.Next(1000, 2000);
+            while(flightManager.AddFlight(id) == false)
+            {
+                 id = rnd.Next(1000, 2000);
+            }
+            listBFlights.Items.Add(flightManager.GetFlightByID(id));
+
+            if (selectedTile != null)
+            {
+                InfoDisplayer(selectedTile);
+            }
+        }
+
+        private void CheckInInfoDisplayer(CheckIn ch)
+        {
+            List<Flight> filter = flightManager.GetFlights().ToList();
+            foreach(Flight look in filter.ToList())
+            {
+                foreach(Flight exist in ch.GetFlights())
+                {
+                    if(look.FlightID == exist.FlightID)
+                    filter.Remove(look);
+                }
+            }
+            listBNodeInfoList.Items.Clear();
+            cmBoxCheckInFlights.Items.Clear();
+            foreach (Flight f in ch.GetFlights())
+            {
+                listBNodeInfoList.Items.Add(f);
+            }
+            foreach(Flight f in filter)
+            {
+                cmBoxCheckInFlights.Items.Add(f);
+            }
+        }
+
+        private void InfoDisplayer(GridTile t)
+        {
+            lblTileCoordinates.Text = t.Column + " " + t.Row;
+            if (t.nextTile != null)
+                lblNextTile.Text = t.nextTile.Column + " " + t.nextTile.Row;
+            else
+                lblNextTile.Text = "";
+
+            if(t is CheckInTile)
+            {
+                CheckInInfoDisplayer(t.nodeInGrid as CheckIn);
+            }
+            //Console.WriteLine("nani " + pathFinder.FindFinalDropOff(t.nodeInGrid, 0));
+        }
+
+        private void BtnFlightToCheckIn_Click(object sender, EventArgs e)
+        {
+            if(cmBoxCheckInFlights.SelectedItem != null)
+            {
+                CheckIn ch = selectedTile.nodeInGrid as CheckIn;
+                ch.AddFlights(cmBoxCheckInFlights.SelectedItem as Flight);
+                MessageBox.Show(ch.GetFlights().Count() + "");
+                InfoDisplayer(selectedTile);
             }
         }
     }

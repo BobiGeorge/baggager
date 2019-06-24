@@ -11,22 +11,40 @@ namespace ConveyorMyWay
         Node[] nextNodes;
         int[] flightIDs;
 
+        Dictionary<int, Node> nextNodesDic;
+
         public BranchingConveyor()
         {
             nextNodes = new Node[3];
             flightIDs = new int[3];
+
+            nextNodesDic = new Dictionary<int, Node>();
         }
 
         public void AddNewConnection(Node target, PathFinder p)
         {
-            int id = p.FindFinalDropOff(target, 0);
-            for(int i = 0; i < nextNodes.Count(); i++)
+
+        }
+        public List<Node> ReturnNextNodes()
+        {
+            List<Node> temp = new List<Node>();
+            foreach(var d in nextNodesDic)
             {
-                if(nextNodes[i] == null)
+                temp.Add(d.Value);
+            }
+            return temp;
+        }
+        public void SetBaggageDirection()
+        {
+            if(baggageHeld != null)
+            {
+                foreach(var d in nextNodesDic)
                 {
-                    nextNodes[i] = target;
-              //      flightIDs[i] = 
-                    break;
+                    if(d.Key == baggageHeld.flightID)
+                    {
+                        nextNode = d.Value;
+                        break;
+                    }
                 }
             }
         }

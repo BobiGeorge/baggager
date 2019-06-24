@@ -102,6 +102,9 @@ namespace ConveyorMyWay
                 case "DropOff":
                     t = new DropOffTile(toReplace.Column, toReplace.Row, tileWidth, tileHeight);
                     break;
+                case "Branch":
+                    t = new BranchTile(toReplace.Column, toReplace.Row, tileWidth, tileHeight);
+                    break;
             }
             gridTiles.Remove(toReplace);
             gridTiles.Add(t);

@@ -9,10 +9,12 @@ namespace ConveyorMyWay
     class CheckIn : Node
     {
         List<Baggage> baggages;
+        List<Flight> flights;
 
         public CheckIn()
         {
             baggages = new List<Baggage>();
+            flights = new List<Flight>();
         }
 
         public void SendFirstBaggage()
@@ -28,6 +30,15 @@ namespace ConveyorMyWay
         public void AddBaggage(Baggage b)
         {
             baggages.Add(b);
+        }
+
+        public void AddFlights(Flight f)
+        {
+            flights.Add(f);
+        }
+        public List<Flight> GetFlights()
+        {
+            return flights;
         }
     }
 }

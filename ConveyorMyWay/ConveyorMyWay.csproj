@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Baggage.cs" />
     <Compile Include="BranchingConveyor.cs" />
+    <Compile Include="BranchTile.cs" />
     <Compile Include="CheckIn.cs" />
     <Compile Include="CheckInTile.cs" />
     <Compile Include="Conveyor.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="DropOffTile.cs" />
     <Compile Include="EmptyTile.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="Flight.cs" />
+    <Compile Include="FlightManager.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

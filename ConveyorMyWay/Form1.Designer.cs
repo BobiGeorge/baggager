@@ -30,13 +30,19 @@
         {
             this.animationBox = new System.Windows.Forms.PictureBox();
             this.grBoxBuildType = new System.Windows.Forms.GroupBox();
+            this.rbBranch = new System.Windows.Forms.RadioButton();
             this.rbDropOff = new System.Windows.Forms.RadioButton();
             this.rbConveyor = new System.Windows.Forms.RadioButton();
             this.rbCheckIn = new System.Windows.Forms.RadioButton();
             this.chBoxBuildMode = new System.Windows.Forms.CheckBox();
             this.grBoxTileInfo = new System.Windows.Forms.GroupBox();
-            this.lblTileCoordinates = new System.Windows.Forms.Label();
+            this.btnFlightToCheckIn = new System.Windows.Forms.Button();
+            this.cmBoxCheckInFlights = new System.Windows.Forms.ComboBox();
             this.lblNextTile = new System.Windows.Forms.Label();
+            this.lblTileCoordinates = new System.Windows.Forms.Label();
+            this.listBFlights = new System.Windows.Forms.ListBox();
+            this.btnAddFlight = new System.Windows.Forms.Button();
+            this.listBNodeInfoList = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.animationBox)).BeginInit();
             this.grBoxBuildType.SuspendLayout();
             this.grBoxTileInfo.SuspendLayout();
@@ -44,9 +50,9 @@
             // 
             // animationBox
             // 
-            this.animationBox.Location = new System.Drawing.Point(193, 12);
+            this.animationBox.Location = new System.Drawing.Point(287, 12);
             this.animationBox.Name = "animationBox";
-            this.animationBox.Size = new System.Drawing.Size(884, 485);
+            this.animationBox.Size = new System.Drawing.Size(884, 515);
             this.animationBox.TabIndex = 0;
             this.animationBox.TabStop = false;
             this.animationBox.Paint += new System.Windows.Forms.PaintEventHandler(this.AnimationBox_Paint);
@@ -56,15 +62,28 @@
             // 
             // grBoxBuildType
             // 
+            this.grBoxBuildType.Controls.Add(this.rbBranch);
             this.grBoxBuildType.Controls.Add(this.rbDropOff);
             this.grBoxBuildType.Controls.Add(this.rbConveyor);
             this.grBoxBuildType.Controls.Add(this.rbCheckIn);
             this.grBoxBuildType.Location = new System.Drawing.Point(12, 68);
             this.grBoxBuildType.Name = "grBoxBuildType";
-            this.grBoxBuildType.Size = new System.Drawing.Size(175, 113);
+            this.grBoxBuildType.Size = new System.Drawing.Size(175, 127);
             this.grBoxBuildType.TabIndex = 1;
             this.grBoxBuildType.TabStop = false;
             this.grBoxBuildType.Text = "BuildType";
+            // 
+            // rbBranch
+            // 
+            this.rbBranch.AutoSize = true;
+            this.rbBranch.Location = new System.Drawing.Point(6, 100);
+            this.rbBranch.Name = "rbBranch";
+            this.rbBranch.Size = new System.Drawing.Size(74, 21);
+            this.rbBranch.TabIndex = 4;
+            this.rbBranch.TabStop = true;
+            this.rbBranch.Text = "Branch";
+            this.rbBranch.UseVisualStyleBackColor = true;
+            this.rbBranch.CheckedChanged += new System.EventHandler(this.BuildTypeChanged);
             // 
             // rbDropOff
             // 
@@ -115,23 +134,34 @@
             // 
             // grBoxTileInfo
             // 
+            this.grBoxTileInfo.Controls.Add(this.btnFlightToCheckIn);
+            this.grBoxTileInfo.Controls.Add(this.cmBoxCheckInFlights);
             this.grBoxTileInfo.Controls.Add(this.lblNextTile);
             this.grBoxTileInfo.Controls.Add(this.lblTileCoordinates);
-            this.grBoxTileInfo.Location = new System.Drawing.Point(3, 397);
+            this.grBoxTileInfo.Location = new System.Drawing.Point(3, 362);
             this.grBoxTileInfo.Name = "grBoxTileInfo";
-            this.grBoxTileInfo.Size = new System.Drawing.Size(184, 100);
+            this.grBoxTileInfo.Size = new System.Drawing.Size(143, 193);
             this.grBoxTileInfo.TabIndex = 3;
             this.grBoxTileInfo.TabStop = false;
             this.grBoxTileInfo.Text = "TileInfo";
             // 
-            // lblTileCoordinates
+            // btnFlightToCheckIn
             // 
-            this.lblTileCoordinates.AutoSize = true;
-            this.lblTileCoordinates.Location = new System.Drawing.Point(58, 34);
-            this.lblTileCoordinates.Name = "lblTileCoordinates";
-            this.lblTileCoordinates.Size = new System.Drawing.Size(46, 17);
-            this.lblTileCoordinates.TabIndex = 4;
-            this.lblTileCoordinates.Text = "label1";
+            this.btnFlightToCheckIn.Location = new System.Drawing.Point(9, 109);
+            this.btnFlightToCheckIn.Name = "btnFlightToCheckIn";
+            this.btnFlightToCheckIn.Size = new System.Drawing.Size(128, 50);
+            this.btnFlightToCheckIn.TabIndex = 7;
+            this.btnFlightToCheckIn.Text = "Add flight to check in";
+            this.btnFlightToCheckIn.UseVisualStyleBackColor = true;
+            this.btnFlightToCheckIn.Click += new System.EventHandler(this.BtnFlightToCheckIn_Click);
+            // 
+            // cmBoxCheckInFlights
+            // 
+            this.cmBoxCheckInFlights.FormattingEnabled = true;
+            this.cmBoxCheckInFlights.Location = new System.Drawing.Point(9, 79);
+            this.cmBoxCheckInFlights.Name = "cmBoxCheckInFlights";
+            this.cmBoxCheckInFlights.Size = new System.Drawing.Size(121, 24);
+            this.cmBoxCheckInFlights.TabIndex = 6;
             // 
             // lblNextTile
             // 
@@ -142,17 +172,56 @@
             this.lblNextTile.TabIndex = 5;
             this.lblNextTile.Text = "label1";
             // 
+            // lblTileCoordinates
+            // 
+            this.lblTileCoordinates.AutoSize = true;
+            this.lblTileCoordinates.Location = new System.Drawing.Point(58, 34);
+            this.lblTileCoordinates.Name = "lblTileCoordinates";
+            this.lblTileCoordinates.Size = new System.Drawing.Size(46, 17);
+            this.lblTileCoordinates.TabIndex = 4;
+            this.lblTileCoordinates.Text = "label1";
+            // 
+            // listBFlights
+            // 
+            this.listBFlights.FormattingEnabled = true;
+            this.listBFlights.ItemHeight = 16;
+            this.listBFlights.Location = new System.Drawing.Point(12, 202);
+            this.listBFlights.Name = "listBFlights";
+            this.listBFlights.Size = new System.Drawing.Size(175, 84);
+            this.listBFlights.TabIndex = 4;
+            // 
+            // btnAddFlight
+            // 
+            this.btnAddFlight.Location = new System.Drawing.Point(12, 292);
+            this.btnAddFlight.Name = "btnAddFlight";
+            this.btnAddFlight.Size = new System.Drawing.Size(85, 34);
+            this.btnAddFlight.TabIndex = 5;
+            this.btnAddFlight.Text = "Add Flight";
+            this.btnAddFlight.UseVisualStyleBackColor = true;
+            this.btnAddFlight.Click += new System.EventHandler(this.BtnAddFlight_Click);
+            // 
+            // listBNodeInfoList
+            // 
+            this.listBNodeInfoList.FormattingEnabled = true;
+            this.listBNodeInfoList.ItemHeight = 16;
+            this.listBNodeInfoList.Location = new System.Drawing.Point(152, 443);
+            this.listBNodeInfoList.Name = "listBNodeInfoList";
+            this.listBNodeInfoList.Size = new System.Drawing.Size(120, 84);
+            this.listBNodeInfoList.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1089, 509);
+            this.ClientSize = new System.Drawing.Size(1170, 557);
+            this.Controls.Add(this.listBNodeInfoList);
+            this.Controls.Add(this.btnAddFlight);
+            this.Controls.Add(this.listBFlights);
             this.Controls.Add(this.grBoxTileInfo);
             this.Controls.Add(this.chBoxBuildMode);
             this.Controls.Add(this.grBoxBuildType);
             this.Controls.Add(this.animationBox);
             this.Name = "Form1";
-            this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.animationBox)).EndInit();
             this.grBoxBuildType.ResumeLayout(false);
             this.grBoxBuildType.PerformLayout();
@@ -174,6 +243,12 @@
         private System.Windows.Forms.GroupBox grBoxTileInfo;
         private System.Windows.Forms.Label lblNextTile;
         private System.Windows.Forms.Label lblTileCoordinates;
+        private System.Windows.Forms.RadioButton rbBranch;
+        private System.Windows.Forms.ListBox listBFlights;
+        private System.Windows.Forms.Button btnAddFlight;
+        private System.Windows.Forms.ComboBox cmBoxCheckInFlights;
+        private System.Windows.Forms.ListBox listBNodeInfoList;
+        private System.Windows.Forms.Button btnFlightToCheckIn;
     }
 }
 

@@ -22,6 +22,7 @@ namespace ConveyorMyWay
         }
         public void Move()
         {
+            SetBranchDirections();
             ReceiveFromDropOff();
             SendToCheckIns();
             MoveNodes(conveyors);
@@ -42,6 +43,19 @@ namespace ConveyorMyWay
             {
                 d.ReceiveBaggage();
             }
+        }
+
+        private void SetBranchDirections()
+        {
+            foreach(BranchingConveyor bc in branchingConveyors)
+            {
+                bc.SetBaggageDirection();
+            }
+        }
+
+        private void ConnectBranches()
+        {
+
         }
 
         public void MoveNodes<T>(List<T> moveList) where T : Node
@@ -97,7 +111,6 @@ namespace ConveyorMyWay
                 case "CheckIn":
                     CheckIn ch = new CheckIn();
                     checkIns.Add(ch);
-                    ch.AddBaggage(new Baggage());
                     return ch;
                 case "DropOff":
                     DropOff dr = new DropOff();
