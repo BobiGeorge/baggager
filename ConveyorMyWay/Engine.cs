@@ -12,6 +12,8 @@ namespace ConveyorMyWay
         List<Conveyor> conveyors;
         List<DropOff> dropOffs;
         List<BranchingConveyor> branchingConveyors;
+        QueueCreator queueCreator;
+        Randomizer randomizer;
 
         public Engine()
         {
@@ -19,14 +21,30 @@ namespace ConveyorMyWay
             conveyors = new List<Conveyor>();
             dropOffs = new List<DropOff>();
             branchingConveyors = new List<BranchingConveyor>();
+            queueCreator = new QueueCreator();
+            randomizer = new Randomizer();
         }
         public void Move()
         {
+            MoveToCheckInQueues();
             SetBranchDirections();
             ReceiveFromDropOff();
             SendToCheckIns();
             MoveNodes(conveyors);
             MoveNodes(checkIns);    
+        }
+
+        public void AddBaggageToQueueCreator(int id, int count)
+        {
+            for(int i = 0; i < count; i++)
+            {
+                queueCreator.AddBaggage(new Baggage(id));
+            }
+            randomizer.Shuffle(queueCreator.ReturnBaggages());
+        }
+        public void MoveToCheckInQueues()
+        {
+            queueCreator.SendToCheckIn(checkIns);
         }
 
         private void SendToCheckIns()

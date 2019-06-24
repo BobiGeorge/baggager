@@ -43,6 +43,7 @@
             this.listBFlights = new System.Windows.Forms.ListBox();
             this.btnAddFlight = new System.Windows.Forms.Button();
             this.listBNodeInfoList = new System.Windows.Forms.ListBox();
+            this.tbBaggageAmount = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.animationBox)).BeginInit();
             this.grBoxBuildType.SuspendLayout();
             this.grBoxTileInfo.SuspendLayout();
@@ -192,7 +193,7 @@
             // 
             // btnAddFlight
             // 
-            this.btnAddFlight.Location = new System.Drawing.Point(12, 292);
+            this.btnAddFlight.Location = new System.Drawing.Point(12, 331);
             this.btnAddFlight.Name = "btnAddFlight";
             this.btnAddFlight.Size = new System.Drawing.Size(85, 34);
             this.btnAddFlight.TabIndex = 5;
@@ -209,11 +210,20 @@
             this.listBNodeInfoList.Size = new System.Drawing.Size(120, 84);
             this.listBNodeInfoList.TabIndex = 6;
             // 
+            // tbBaggageAmount
+            // 
+            this.tbBaggageAmount.Location = new System.Drawing.Point(46, 303);
+            this.tbBaggageAmount.Name = "tbBaggageAmount";
+            this.tbBaggageAmount.Size = new System.Drawing.Size(100, 22);
+            this.tbBaggageAmount.TabIndex = 7;
+            this.tbBaggageAmount.Text = "11";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 557);
+            this.Controls.Add(this.tbBaggageAmount);
             this.Controls.Add(this.listBNodeInfoList);
             this.Controls.Add(this.btnAddFlight);
             this.Controls.Add(this.listBFlights);
@@ -249,6 +259,7 @@
         private System.Windows.Forms.ComboBox cmBoxCheckInFlights;
         private System.Windows.Forms.ListBox listBNodeInfoList;
         private System.Windows.Forms.Button btnFlightToCheckIn;
+        private System.Windows.Forms.TextBox tbBaggageAmount;
     }
 }
 

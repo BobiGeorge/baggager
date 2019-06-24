@@ -16,7 +16,7 @@ namespace ConveyorMyWay
             flights = new List<Flight>();
         }
 
-        public bool AddFlight(int id)
+        public bool AddFlight(int id, int baggageCount)
         {
             foreach(Flight f in flights)
             {
@@ -25,7 +25,7 @@ namespace ConveyorMyWay
                     return false;
                 }
             }
-            flights.Add(new Flight(id));
+            flights.Add(new Flight(id, baggageCount));
             return true;
         }
         public List<Flight> GetFlights()

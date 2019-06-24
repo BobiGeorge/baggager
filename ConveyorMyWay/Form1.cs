@@ -61,7 +61,7 @@ namespace ConveyorMyWay
             DropOff dd = d.nodeInGrid as DropOff;
             dd.FlightID = 111;
             Conveyor c = thisEngine.firstConveyor();
-            c.baggageHeld = new Baggage();
+            c.baggageHeld = new Baggage(111);
             List<Conveyor> conveyors = thisEngine.GetConveyors();
             for(int i = 0; i < conveyors.Count - 1; i++)
             {
@@ -116,6 +116,7 @@ namespace ConveyorMyWay
             if(inBuildMode == false)
             {
                 InfoDisplayer(t);
+                selectedTile = t;
             }
 
             animationBox.Invalidate();
@@ -205,7 +206,8 @@ namespace ConveyorMyWay
 
             Random rnd = new Random();
             int id = rnd.Next(1000, 2000);
-            while(flightManager.AddFlight(id) == false)
+            int count = Convert.ToInt32(tbBaggageAmount.Text);
+            while(flightManager.AddFlight(id, count) == false)
             {
                  id = rnd.Next(1000, 2000);
             }
@@ -215,6 +217,7 @@ namespace ConveyorMyWay
             {
                 InfoDisplayer(selectedTile);
             }
+            thisEngine.AddBaggageToQueueCreator(id, count);
         }
 
         private void CheckInInfoDisplayer(CheckIn ch)
