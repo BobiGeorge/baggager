@@ -29,6 +29,12 @@ namespace ConveyorMyWay
             InitializeComponent();
             grBoxBuildType.Visible = false;
 
+            cmBoxNodeFlights.Visible = false;
+            listBNodeInfoList.Visible = false;
+            btnFlightToCheckIn.Visible = false;
+            btnFlightToDropOff.Visible = false;
+            lblDropOffFLID.Visible = false;
+
             thisGrid = new Grid(animationBox.Width, animationBox.Height);
             thisEngine = new Engine();
             pathFinder = new PathFinder();
@@ -175,12 +181,18 @@ namespace ConveyorMyWay
                     inBuildMode = true;
                     grBoxBuildType.Visible = true;
                     rbCheckIn.Checked = true;
+                    cmBoxNodeFlights.Visible = false;
+                    listBNodeInfoList.Visible = false;
+                    btnFlightToCheckIn.Visible = false;
+                    btnFlightToDropOff.Visible = false;
+                    lblDropOffFLID.Visible = false;
                     break;
                 case false:
                     inBuildMode = false;
                     grBoxBuildType.Visible = false;
                     break;
             }
+            selectedTile = null;
         }
         public void BuildTypeChanged(object sender, EventArgs e)
         {
@@ -232,14 +244,32 @@ namespace ConveyorMyWay
                 }
             }
             listBNodeInfoList.Items.Clear();
-            cmBoxCheckInFlights.Items.Clear();
+            cmBoxNodeFlights.Items.Clear();
             foreach (Flight f in ch.GetFlights())
             {
                 listBNodeInfoList.Items.Add(f);
             }
             foreach(Flight f in filter)
             {
-                cmBoxCheckInFlights.Items.Add(f);
+                cmBoxNodeFlights.Items.Add(f);
+            }
+        }
+        private void DropOffInfoDisplayer(DropOff d)
+        {
+            lblDropOffFLID.Text = Convert.ToString(d.FlightID);
+            List<Flight> filter = flightManager.GetFlights().ToList();
+            foreach (Flight look in filter.ToList())
+            {
+                if(look.FlightID == d.FlightID)
+                {
+                    filter.Remove(look);
+                    break;
+                }
+            }
+            cmBoxNodeFlights.Items.Clear();
+            foreach (Flight f in filter)
+            {
+                cmBoxNodeFlights.Items.Add(f);
             }
         }
 
@@ -254,17 +284,55 @@ namespace ConveyorMyWay
             if(t is CheckInTile)
             {
                 CheckInInfoDisplayer(t.nodeInGrid as CheckIn);
+                cmBoxNodeFlights.Visible = true;
+                listBNodeInfoList.Visible = true;
+                btnFlightToCheckIn.Visible = true;
+                btnFlightToDropOff.Visible = false;
+                lblDropOffFLID.Visible = false;
+            }
+            else if(t is DropOffTile)
+            {
+                DropOffInfoDisplayer(t.nodeInGrid as DropOff);
+                cmBoxNodeFlights.Visible = false;
+                listBNodeInfoList.Visible = false;
+                btnFlightToCheckIn.Visible = false;
+                btnFlightToDropOff.Visible = true;
+                lblDropOffFLID.Visible = true;
+            }
+            else
+            {
+                cmBoxNodeFlights.Visible = false;
+                listBNodeInfoList.Visible = false;
+                btnFlightToCheckIn.Visible = false;
+                btnFlightToDropOff.Visible = false;
+                lblDropOffFLID.Visible = false;
             }
             //Console.WriteLine("nani " + pathFinder.FindFinalDropOff(t.nodeInGrid, 0));
         }
 
         private void BtnFlightToCheckIn_Click(object sender, EventArgs e)
         {
-            if(cmBoxCheckInFlights.SelectedItem != null)
+            if (cmBoxNodeFlights.SelectedItem != null)
             {
                 CheckIn ch = selectedTile.nodeInGrid as CheckIn;
-                ch.AddFlights(cmBoxCheckInFlights.SelectedItem as Flight);
+                ch.AddFlights(cmBoxNodeFlights.SelectedItem as Flight);
                 MessageBox.Show(ch.GetFlights().Count() + "");
+                InfoDisplayer(selectedTile);
+            }
+        }
+
+        private void CheckBranchingConnection()
+        {
+
+        }
+
+        private void BtnFlightToDropOff_Click(object sender, EventArgs e)
+        {
+            if(cmBoxNodeFlights.SelectedItem != null)
+            {
+                DropOff d = selectedTile.nodeInGrid as DropOff;
+                Flight f = cmBoxNodeFlights.SelectedItem as Flight;
+                d.FlightID = f.FlightID;
                 InfoDisplayer(selectedTile);
             }
         }

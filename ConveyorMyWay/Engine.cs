@@ -71,9 +71,12 @@ namespace ConveyorMyWay
             }
         }
 
-        private void ConnectBranches()
+        private void ConnectBranches(List<Node> nodes)
         {
+            foreach(BranchingConveyor b in branchingConveyors)
+            {
 
+            }
         }
 
         public void MoveNodes<T>(List<T> moveList) where T : Node

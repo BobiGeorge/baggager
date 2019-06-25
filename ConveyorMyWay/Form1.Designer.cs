@@ -37,13 +37,15 @@
             this.chBoxBuildMode = new System.Windows.Forms.CheckBox();
             this.grBoxTileInfo = new System.Windows.Forms.GroupBox();
             this.btnFlightToCheckIn = new System.Windows.Forms.Button();
-            this.cmBoxCheckInFlights = new System.Windows.Forms.ComboBox();
+            this.cmBoxNodeFlights = new System.Windows.Forms.ComboBox();
             this.lblNextTile = new System.Windows.Forms.Label();
             this.lblTileCoordinates = new System.Windows.Forms.Label();
             this.listBFlights = new System.Windows.Forms.ListBox();
             this.btnAddFlight = new System.Windows.Forms.Button();
             this.listBNodeInfoList = new System.Windows.Forms.ListBox();
             this.tbBaggageAmount = new System.Windows.Forms.TextBox();
+            this.btnFlightToDropOff = new System.Windows.Forms.Button();
+            this.lblDropOffFLID = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.animationBox)).BeginInit();
             this.grBoxBuildType.SuspendLayout();
             this.grBoxTileInfo.SuspendLayout();
@@ -135,8 +137,9 @@
             // 
             // grBoxTileInfo
             // 
+            this.grBoxTileInfo.Controls.Add(this.btnFlightToDropOff);
             this.grBoxTileInfo.Controls.Add(this.btnFlightToCheckIn);
-            this.grBoxTileInfo.Controls.Add(this.cmBoxCheckInFlights);
+            this.grBoxTileInfo.Controls.Add(this.cmBoxNodeFlights);
             this.grBoxTileInfo.Controls.Add(this.lblNextTile);
             this.grBoxTileInfo.Controls.Add(this.lblTileCoordinates);
             this.grBoxTileInfo.Location = new System.Drawing.Point(3, 362);
@@ -156,13 +159,13 @@
             this.btnFlightToCheckIn.UseVisualStyleBackColor = true;
             this.btnFlightToCheckIn.Click += new System.EventHandler(this.BtnFlightToCheckIn_Click);
             // 
-            // cmBoxCheckInFlights
+            // cmBoxNodeFlights
             // 
-            this.cmBoxCheckInFlights.FormattingEnabled = true;
-            this.cmBoxCheckInFlights.Location = new System.Drawing.Point(9, 79);
-            this.cmBoxCheckInFlights.Name = "cmBoxCheckInFlights";
-            this.cmBoxCheckInFlights.Size = new System.Drawing.Size(121, 24);
-            this.cmBoxCheckInFlights.TabIndex = 6;
+            this.cmBoxNodeFlights.FormattingEnabled = true;
+            this.cmBoxNodeFlights.Location = new System.Drawing.Point(9, 79);
+            this.cmBoxNodeFlights.Name = "cmBoxNodeFlights";
+            this.cmBoxNodeFlights.Size = new System.Drawing.Size(121, 24);
+            this.cmBoxNodeFlights.TabIndex = 6;
             // 
             // lblNextTile
             // 
@@ -218,11 +221,31 @@
             this.tbBaggageAmount.TabIndex = 7;
             this.tbBaggageAmount.Text = "11";
             // 
+            // btnFlightToDropOff
+            // 
+            this.btnFlightToDropOff.Location = new System.Drawing.Point(9, 146);
+            this.btnFlightToDropOff.Name = "btnFlightToDropOff";
+            this.btnFlightToDropOff.Size = new System.Drawing.Size(124, 47);
+            this.btnFlightToDropOff.TabIndex = 8;
+            this.btnFlightToDropOff.Text = "Set flight to drop off";
+            this.btnFlightToDropOff.UseVisualStyleBackColor = true;
+            this.btnFlightToDropOff.Click += new System.EventHandler(this.BtnFlightToDropOff_Click);
+            // 
+            // lblDropOffFLID
+            // 
+            this.lblDropOffFLID.AutoSize = true;
+            this.lblDropOffFLID.Location = new System.Drawing.Point(164, 531);
+            this.lblDropOffFLID.Name = "lblDropOffFLID";
+            this.lblDropOffFLID.Size = new System.Drawing.Size(51, 17);
+            this.lblDropOffFLID.TabIndex = 9;
+            this.lblDropOffFLID.Text = "flightID";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 557);
+            this.Controls.Add(this.lblDropOffFLID);
             this.Controls.Add(this.tbBaggageAmount);
             this.Controls.Add(this.listBNodeInfoList);
             this.Controls.Add(this.btnAddFlight);
@@ -256,10 +279,12 @@
         private System.Windows.Forms.RadioButton rbBranch;
         private System.Windows.Forms.ListBox listBFlights;
         private System.Windows.Forms.Button btnAddFlight;
-        private System.Windows.Forms.ComboBox cmBoxCheckInFlights;
+        private System.Windows.Forms.ComboBox cmBoxNodeFlights;
         private System.Windows.Forms.ListBox listBNodeInfoList;
         private System.Windows.Forms.Button btnFlightToCheckIn;
         private System.Windows.Forms.TextBox tbBaggageAmount;
+        private System.Windows.Forms.Button btnFlightToDropOff;
+        private System.Windows.Forms.Label lblDropOffFLID;
     }
 }
 
