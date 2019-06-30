@@ -30,8 +30,9 @@ namespace ConveyorMyWay
             SetBranchDirections();
             ReceiveFromDropOff();
             SendToCheckIns();
+            MoveNodes(branchingConveyors);
             MoveNodes(conveyors);
-            MoveNodes(checkIns);    
+            MoveNodes(checkIns);
         }
 
         public void AddBaggageToQueueCreator(int id, int count)
@@ -71,14 +72,6 @@ namespace ConveyorMyWay
             }
         }
 
-        private void ConnectBranches(List<Node> nodes)
-        {
-            foreach(BranchingConveyor b in branchingConveyors)
-            {
-
-            }
-        }
-
         public void MoveNodes<T>(List<T> moveList) where T : Node
         {
             foreach(Node c in moveList)
@@ -94,10 +87,6 @@ namespace ConveyorMyWay
                 }
                 c.justReceived = false;
             }
-        }
-        public void MoveBranchingConveyor()
-        {
-
         }
 
         public Conveyor firstConveyor()
@@ -143,6 +132,10 @@ namespace ConveyorMyWay
                     return br;
             }
             return null;
+        }
+        public int GetBranchesCount()
+        {
+            return branchingConveyors.Count();
         }
     }
 }

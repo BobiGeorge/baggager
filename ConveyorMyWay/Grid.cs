@@ -170,7 +170,7 @@ namespace ConveyorMyWay
 
             foreach (GridTile t in tempTiles.ToList())
             {
-                if (t == null)
+                if (t == null || t is EmptyTile)
                 {
                     tempTiles.Remove(t);
                 }
@@ -190,6 +190,23 @@ namespace ConveyorMyWay
             List<GridTile> tempList = new List<GridTile>();
             tempList.Add(temp);
             return tempList;
+        }
+
+        public List<GridTile> GetBranches(int count)
+        {
+            List<GridTile> temp = new List<GridTile>();
+            foreach (GridTile g in gridTiles)
+            {
+                if(g is BranchTile)
+                {
+                    temp.Add(g);
+                }
+                if(temp.Count() == count)
+                {
+                    break;
+                }
+            }
+            return temp;
         }
     }
 }

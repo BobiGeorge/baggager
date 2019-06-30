@@ -190,6 +190,7 @@ namespace ConveyorMyWay
                 case false:
                     inBuildMode = false;
                     grBoxBuildType.Visible = false;
+                    CheckBranchingConnection();
                     break;
             }
             selectedTile = null;
@@ -293,7 +294,7 @@ namespace ConveyorMyWay
             else if(t is DropOffTile)
             {
                 DropOffInfoDisplayer(t.nodeInGrid as DropOff);
-                cmBoxNodeFlights.Visible = false;
+                cmBoxNodeFlights.Visible = true;
                 listBNodeInfoList.Visible = false;
                 btnFlightToCheckIn.Visible = false;
                 btnFlightToDropOff.Visible = true;
@@ -323,7 +324,37 @@ namespace ConveyorMyWay
 
         private void CheckBranchingConnection()
         {
+            List<GridTile> branches = thisGrid.GetBranches(thisEngine.GetBranchesCount());
 
+            foreach (GridTile b in branches)
+            {
+                BranchingConveyor branch = b.nodeInGrid as BranchingConveyor;
+                List<GridTile> tempNeigh = thisGrid.GetNeighboursIn4Directions(b);
+                foreach (GridTile neighbours in tempNeigh)
+                {
+                    if (neighbours.nodeInGrid == null || neighbours.nextTile == b)
+                    {
+                        continue;
+                    }
+                    int id = pathFinder.FindFinalDropOff(neighbours.nodeInGrid, 0);
+                    if (id != 0)
+                    {
+                        bool notInDic = true;
+                        foreach (var nexts in branch.ReturnNextsDic())
+                        {
+                            if(nexts.Key == id && nexts.Value == neighbours.nodeInGrid)
+                            {
+                                notInDic = false;
+                                break;
+                            }
+                        }
+                        if (notInDic)
+                        {
+                            branch.AddNextToDictionary(id, neighbours.nodeInGrid);
+                        }
+                    }
+                }
+            }
         }
 
         private void BtnFlightToDropOff_Click(object sender, EventArgs e)
@@ -334,6 +365,26 @@ namespace ConveyorMyWay
                 Flight f = cmBoxNodeFlights.SelectedItem as Flight;
                 d.FlightID = f.FlightID;
                 InfoDisplayer(selectedTile);
+            }
+        }
+
+        private void BtnTest_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(thisGrid.GetBranches(thisEngine.GetBranchesCount()).Count() + "");
+            //BranchingConveyor b = selectedTile.nodeInGrid as BranchingConveyor;
+            //MessageBox.Show(b.ReturnNextsDic().Count() + "");
+            //string z = " ";
+            //foreach(var v in b.ReturnNextsDic())
+            //{
+            //    z = z + " " + v.Key;
+            //}
+            //MessageBox.Show(z);
+
+            DropOff d = selectedTile.nodeInGrid as DropOff;
+            testList.Items.Clear();
+            foreach(var b in d.ReturnBaggages())
+            {
+                testList.Items.Add(b.flightID);
             }
         }
     }

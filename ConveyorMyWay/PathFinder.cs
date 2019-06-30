@@ -20,6 +20,10 @@ namespace ConveyorMyWay
                 id = d.FlightID;
                 return id;
             }
+            if(starter.nextNode == null)
+            {
+                return 0;
+            }
             if(starter.nextNode != null)
             {
                 id = FindFinalDropOff(starter.nextNode, id);

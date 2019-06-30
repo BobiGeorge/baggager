@@ -25,5 +25,10 @@ namespace ConveyorMyWay
                 baggageHeld = null;
             }
         }
+
+        public List<Baggage> ReturnBaggages()
+        {
+            return baggages;
+        }
     }
 }

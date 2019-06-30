@@ -8,22 +8,21 @@ namespace ConveyorMyWay
 {
     class BranchingConveyor : Node
     {
-        Node[] nextNodes;
-        int[] flightIDs;
 
         Dictionary<int, Node> nextNodesDic;
 
         public BranchingConveyor()
         {
-            nextNodes = new Node[3];
-            flightIDs = new int[3];
-
             nextNodesDic = new Dictionary<int, Node>();
         }
 
         public void AddNewConnection(Node target, PathFinder p)
         {
 
+        }
+        public Dictionary<int, Node> ReturnNextsDic()
+        {
+            return nextNodesDic;
         }
         public List<Node> ReturnNextNodes()
         {
@@ -47,6 +46,10 @@ namespace ConveyorMyWay
                     }
                 }
             }
+        }
+        public void AddNextToDictionary(int flightID, Node d)
+        {
+            nextNodesDic.Add(flightID, d);
         }
     }
 }
